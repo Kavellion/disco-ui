@@ -21,7 +21,7 @@ You don't have to fetch anything by hand.
 | Folder | Source | License |
 |---|---|---|
 | `CLIP/` | github.com/openai/CLIP | MIT |
-| `guided-diffusion/` | github.com/openai/guided-diffusion | MIT |
+| `guided-diffusion/` | github.com/kostarion/guided-diffusion (the Disco-patched fork — stock openai/guided-diffusion lacks the sampler arguments the engine uses) | MIT |
 
 ## Your own model files — not bundled, not downloaded
 
