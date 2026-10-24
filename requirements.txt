@@ -3,6 +3,10 @@
 # torch + torchvision are NOT listed here on purpose: install.bat
 # installs them first from PyTorch's CUDA index so GPU support works.
 # Everything below installs from PyPI after that.
+#
+# The engine core also needs timm, einops, ipywidgets, IPython and
+# matplotlib -- the notebook's environment had them, so a fresh install
+# must list them explicitly or the app fails at import time.
 
 gradio==6.30.0
 resize-right
@@ -16,3 +20,8 @@ ftfy
 regex
 tqdm
 blobfile
+timm
+einops
+ipywidgets
+IPython
+matplotlib
