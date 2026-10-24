@@ -18,6 +18,14 @@ so the core defines it here (GPU when CUDA is available, else CPU).
 Without this line the module fails to import with
 `NameError: name 'device' is not defined`.
 
+RELEASE CHANGE (Oct 24, 2026, public repo only -- the author's working
+copy keeps the notebook's original): the notebook's `wget()` shelled
+out to the `wget` command-line tool, which stock Windows does not have,
+so a fresh install failed on first Generate with
+`[WinError 2] The system cannot find the file specified` the moment it
+had to download a model. This copy downloads with `requests` instead
+(same destination filenames as `wget -P`); everything else is unchanged.
+
 All engine state (args, model, diffusion, clip_models, batchFolder, ...)
 lives as module globals here, exactly as the notebook kept it. The
 wrapper module (disco_engine.py) sets those globals before calling
@@ -96,8 +104,21 @@ except Exception:  # only needed for 3D mode, not phase-1 stills
 warnings.filterwarnings("ignore", category=UserWarning)
 
 def wget(url, outputdir):
-    res = subprocess.run(['wget', url, '-P', f'{outputdir}'], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    print(res)
+    # The notebook shelled out to the `wget` command, which stock
+    # Windows does not have (fresh installs failed on first Generate
+    # with [WinError 2]). Download with requests instead, saving under
+    # the same filename `wget -P` would have used (the URL's last path
+    # component, which matches every URI in the model map).
+    os.makedirs(outputdir, exist_ok=True)
+    filename = os.path.basename(urlparse(url).path)
+    dest = os.path.join(outputdir, filename)
+    with requests.get(url, stream=True) as res:
+        res.raise_for_status()
+        with open(dest, "wb") as f:
+            for chunk in res.iter_content(chunk_size=1 << 20):
+                if chunk:
+                    f.write(chunk)
+    print(f"Downloaded {filename}")
 
 def createPath(filepath):
     os.makedirs(filepath, exist_ok=True)
