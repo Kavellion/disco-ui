@@ -1,0 +1,9 @@
+venv/
+models/*.pt
+models/*.pth
+images_out/
+__pycache__/
+*.pyc
+*.zip
+disco-ui/progress_preview.png
+progress.png
