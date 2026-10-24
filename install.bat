@@ -6,7 +6,12 @@ REM   1. Creates a Python virtual environment (venv) in this folder.
 REM   2. Installs PyTorch with CUDA support (needs an NVIDIA GPU + a
 REM      recent driver) and the rest of the requirements.
 REM   3. Fetches the two open-source code folders the engine needs:
-REM      OpenAI CLIP and OpenAI guided-diffusion.
+REM      OpenAI CLIP and the Disco-patched guided-diffusion fork.
+REM      NOTE: guided-diffusion must come from kostarion's fork, NOT
+REM      stock openai/guided-diffusion. The engine calls the sampler
+REM      with Disco-only arguments (skip_timesteps, init_image,
+REM      randomize_class, transformation_fn); stock openai rejects
+REM      them with "unexpected keyword argument 'skip_timesteps'".
 REM   4. Creates models\ and images_out\.
 REM
 REM What it does NOT do:
@@ -72,10 +77,22 @@ if errorlevel 1 goto :nogit
 if not exist CLIP (
     echo Fetching OpenAI CLIP...
     git clone https://github.com/openai/CLIP.git CLIP
+    if not exist CLIP (
+        echo CLIP download failed. Check your internet connection,
+        echo then run this again.
+        pause
+        exit /b 1
+    )
 )
 if not exist guided-diffusion (
-    echo Fetching OpenAI guided-diffusion...
-    git clone https://github.com/openai/guided-diffusion.git guided-diffusion
+    echo Fetching Disco's guided-diffusion (kostarion fork)...
+    git clone https://github.com/kostarion/guided-diffusion.git guided-diffusion
+    if not exist guided-diffusion (
+        echo guided-diffusion download failed. Check your internet
+        echo connection, then run this again.
+        pause
+        exit /b 1
+    )
 )
 goto :folders
 
@@ -87,13 +104,25 @@ if not exist CLIP (
     powershell -Command "Expand-Archive -Path CLIP.zip -DestinationPath . -Force"
     move CLIP-main CLIP >nul
     del CLIP.zip
+    if not exist CLIP (
+        echo CLIP download failed. Check your internet connection,
+        echo then run this again.
+        pause
+        exit /b 1
+    )
 )
 if not exist guided-diffusion (
-    echo Fetching OpenAI guided-diffusion...
-    powershell -Command "Invoke-WebRequest -Uri https://github.com/openai/guided-diffusion/archive/refs/heads/main.zip -OutFile guided-diffusion.zip"
+    echo Fetching Disco's guided-diffusion (kostarion fork)...
+    powershell -Command "Invoke-WebRequest -Uri https://github.com/kostarion/guided-diffusion/archive/refs/heads/main.zip -OutFile guided-diffusion.zip"
     powershell -Command "Expand-Archive -Path guided-diffusion.zip -DestinationPath . -Force"
     move guided-diffusion-main guided-diffusion >nul
     del guided-diffusion.zip
+    if not exist guided-diffusion (
+        echo guided-diffusion download failed. Check your internet
+        echo connection, then run this again.
+        pause
+        exit /b 1
+    )
 )
 
 :folders
