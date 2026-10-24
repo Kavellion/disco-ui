@@ -1,0 +1,18 @@
+# Disco UI requirements
+#
+# torch + torchvision are NOT listed here on purpose: install.bat
+# installs them first from PyTorch's CUDA index so GPU support works.
+# Everything below installs from PyPI after that.
+
+gradio==6.30.0
+resize-right
+numpy
+pandas
+opencv-python
+pillow
+lpips
+requests
+ftfy
+regex
+tqdm
+blobfile
