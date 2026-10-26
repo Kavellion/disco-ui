@@ -6,6 +6,12 @@ Disco Diffusion is a beautiful, weird, powerful image generator — but
 running it used to mean notebooks, cells, and cloud accounts. This is a
 plain app: run it, a page opens in your browser, type a prompt, pictures
 appear. Built for everyone, free forever.
+<img width="1280" height="720" alt="disco-ui-screenshot" src="https://github.com/user-attachments/assets/e8cf4c02-3493-40e0-be2a-7d33c4bbce3d" />
+*Disco UI with generated images*
+<img width="1280" height="768" alt="14-cyberpunk-market" src="https://github.com/user-attachments/assets/84538608-94ab-475d-9c82-479ceffa5cdc" />
+*Example image made with Disco UI: cyberpunk street market*
+<img width="1280" height="768" alt="59-lighthouse-red-sea-towers" src="https://github.com/user-attachments/assets/8c4e5822-fbc8-4bf4-b361-22a642011d80" />
+*Example image made with Disco UI: red-sea lighthouse*
 
 ## What it does
 
