@@ -32,6 +32,11 @@ appear. Built for everyone, free forever.
 - Disk space: the app itself is small; the models download on first run
   (several GB total) and your frames live in `images_out/`
 
+### Install Python first
+If you don't already have Python 3.10 or newer, this is the one thing you install yourself — install.bat handles everything else.
+1. Download Python 3.10 from https://www.python.org/downloads/release/python-31022/ — pick the Windows installer (64-bit).
+2. Run it. On the first screen, tick "Add python.exe to PATH" at the bottom, then Install.
+3. Then continue with Install below.
 ## Install
 
 1. Download this repo (Code → Download ZIP) or `git clone` it.
