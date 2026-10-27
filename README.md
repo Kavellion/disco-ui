@@ -1,4 +1,5 @@
 # Disco UI
+Easiest install: grab the bundled zip from the Releases tab — no Python setup needed.
 
 **Disco Diffusion, without Jupyter and without Colab.**
 
