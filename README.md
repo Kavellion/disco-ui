@@ -1,5 +1,4 @@
 # Disco UI
-Easiest install: grab the bundled zip from the Releases tab — no Python setup needed.
 
 **Disco Diffusion, without Jupyter and without Colab.**
 
@@ -7,19 +6,53 @@ Disco Diffusion is a beautiful, weird, powerful image generator — but
 running it used to mean notebooks, cells, and cloud accounts. This is a
 plain app: run it, a page opens in your browser, type a prompt, pictures
 appear. Built for everyone, free forever.
-<img width="1280" height="720" alt="disco-ui-screenshot" src="https://github.com/user-attachments/assets/e8cf4c02-3493-40e0-be2a-7d33c4bbce3d" />
-*Disco UI with generated images*
-<img width="1280" height="768" alt="14-cyberpunk-market" src="https://github.com/user-attachments/assets/84538608-94ab-475d-9c82-479ceffa5cdc" />
-*Example image made with Disco UI: cyberpunk street market*
-<img width="1280" height="768" alt="59-lighthouse-red-sea-towers" src="https://github.com/user-attachments/assets/8c4e5822-fbc8-4bf4-b361-22a642011d80" />
-*Example image made with Disco UI: red-sea lighthouse*
+
+## What's new in v1.1
+
+The improvements round: the features the rest of the family already had,
+brought home to the app that started it all.
+
+- **Prompt Storage tab** — a notebook for your favorite prompts, one per
+  line; they persist in `prompt_storage.txt` next to `app.py`, so they're
+  still there when you reopen the app. Pick a stored prompt and load it
+  straight into the Prompt box.
+- **Animation tab** — Disco's own native 2D/3D animation: the frame chain
+  from the notebook, with prompt keyframes, resume, and the finished
+  movie playing right in the page. (Needs ffmpeg for MP4 — see below.)
+- **Saved setups** — save the whole Generate recipe under a name and call
+  it back in two clicks; setups are kept in `setups.json` next to
+  `app.py`.
+- **Seed variations** — freeze a frame you like and walk its seed
+  forward, one new frame per seed, settings unchanged.
+- **Upscale tab** — enlarge any saved frame 2x or 4x (an honest Lanczos
+  resample, not an AI upscaler); results land in an `upscaled` folder.
+- **Steps type-in box** — type an exact step count next to the Steps
+  slider instead of dragging to it.
+
+Updating from v1.0: just replace `disco-ui/app.py` with the new one —
+no need to run `install.bat` again.
+
+### Animation and ffmpeg
+
+The Animation tab assembles its movie with **ffmpeg**, and this repo
+does not bundle it. To get MP4 movies: download a free static build of
+ffmpeg (for example the essentials build from
+[gyan.dev](https://www.gyan.dev/ffmpeg/builds/)), pull `ffmpeg.exe` out
+of the zip's `bin` folder, and put it in a `tools` folder next to
+`app.py` — that is, `disco-ui\tools\ffmpeg.exe`. The app looks there
+first. (If you already have ffmpeg installed or the imageio-ffmpeg
+package, it will find those too.)
+
+No ffmpeg? No problem: the Animation tab still hands you a **GIF made
+from the same frames**. Nothing else in the app needs ffmpeg — stills,
+the queue, storage, setups, and upscale all work without it.
 
 ## What it does
 
 - Still-image generation on your own GPU — no cloud, no account
 - Prompt queue: one prompt per line, runs through them in order
 - Dynamic prompts: `{cat|dog|owl}` picks one at random per frame
-- Random prompt button for when you're stuck
+- Random prompt button for when you're stuck (it draws from `disco-ui/random_prompts.txt` — one prompt per line — so you can add your own; without the file it uses a built-in list)
 - Batches: walk away, come back to finished frames
 - Stop button that ends a run cleanly
 - Model choice (512, 256, custom), CLIP selection, symmetry,
@@ -32,6 +65,8 @@ appear. Built for everyone, free forever.
 - Python: nothing to install — Python 3.10 is included in this package, bundled in `python_embeded\`. Any Python you already have is left completely alone
 - Disk space: the app itself is small; the models download on first run
   (several GB total) and your frames live in `images_out/`
+- Optional, for Animation MP4s only: a static `ffmpeg.exe` in
+  `disco-ui\tools\` (see above)
 
 ## Install
 
